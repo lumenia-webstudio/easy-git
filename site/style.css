@@ -1,0 +1,199 @@
+/* Easy Git — landing. Palette de l'application ; la ligne or verticale = la branche main. */
+
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 600; font-display: swap; src: url("fonts/bricolage-grotesque-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 800; font-display: swap; src: url("fonts/bricolage-grotesque-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-display: swap; src: url("fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 700; font-display: swap; src: url("fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; font-display: swap; src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+
+:root {
+  --night: #060d1a;
+  --surface: #0f1d33;
+  --surface-2: #142744;
+  --gold: #f0b429;
+  --gold-soft: rgba(240, 180, 41, 0.35);
+  --ink: #eef2f7;
+  --muted: #a3b4cc;
+  --blue: #5b9cf0;
+  --line: rgba(163, 180, 204, 0.18);
+  --gold-hover: #f9cf47;
+  --gold-glow: rgba(240, 180, 41, 0.45);
+  --code-ink: #d6e1f0;
+  --shadow: rgba(0, 0, 0, 0.8);
+  --night-veil: rgba(6, 13, 26, 0.82);
+  --backdrop-opacity: 0.9;
+
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --rail: clamp(28px, 5vw, 72px);   /* position de la branche depuis le bord gauche */
+  --max: 1160px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--gold); text-underline-offset: 3px; }
+a:hover { color: var(--gold-hover); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+code { font-family: var(--mono); font-size: 0.9em; }
+
+.skip { position: absolute; left: -999px; top: 8px; background: var(--gold); color: var(--night); padding: 8px 14px; border-radius: 6px; z-index: 10; }
+.skip:focus { left: 8px; }
+
+/* ---------- Fond : la vallée continue, défile plus lentement que la page ---------- */
+.backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.backdrop img { width: 100%; height: 125%; object-fit: cover; opacity: var(--backdrop-opacity); }
+.backdrop::after { /* centre assombri : la matière reste sur les côtés, le texte reste lisible */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 55% 70% at 50% 50%, var(--night-veil), transparent 75%);
+}
+@supports (animation-timeline: scroll()) {
+  .backdrop img { animation: drift linear both; animation-timeline: scroll(root); }
+  @keyframes drift { from { transform: translateY(0); } to { transform: translateY(-20%); } }
+}
+
+/* ---------- Hero ---------- */
+.hero { position: relative; min-height: min(92vh, 860px); display: flex; align-items: center; overflow: hidden; }
+.hero-img, .hero-img img { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.hero-img img { object-fit: cover; object-position: right center; }
+.hero::after { /* fond le bas de l'image dans la page */
+  content: ""; position: absolute; inset: auto 0 0 0; height: 30%;
+  background: linear-gradient(to bottom, transparent, var(--night));
+}
+.hero-inner { position: relative; z-index: 2; width: 100%; max-width: var(--max); margin: 0 auto; padding: 96px var(--gutter) 120px; }
+.hero-inner > * { max-width: 34rem; }
+.brand { display: flex; align-items: center; gap: 12px; margin: 0 0 28px; font: 600 1.25rem/1 var(--display); letter-spacing: 0.01em; }
+h1 {
+  font: 800 clamp(2.6rem, 6.2vw, 4.75rem)/1.02 var(--display);
+  letter-spacing: -0.025em;
+  margin: 0 0 22px;
+  text-wrap: balance;
+}
+.lead { font-size: clamp(1.1rem, 1.8vw, 1.3rem); color: var(--muted); margin: 0 0 32px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.meta { font-size: 0.95rem; color: var(--muted); margin: 0; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 22px; border-radius: 999px;
+  font: 700 1rem/1 var(--body); text-decoration: none;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn-primary { background: var(--gold); color: var(--night); }
+.btn-primary:hover { background: var(--gold-hover); color: var(--night); }
+.btn-ghost { border: 1.5px solid var(--gold-soft); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--ink); }
+
+/* ---------- La branche ---------- */
+.branch { position: relative; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter) 0 calc(var(--rail) + 40px); }
+.branch::before { /* la ligne main, dessinée une fois au chargement */
+  content: ""; position: absolute; top: -40px; bottom: 0; left: var(--rail);
+  width: 3px; border-radius: 3px;
+  background: linear-gradient(to bottom, transparent, var(--gold) 80px);
+  transform-origin: top; animation: draw 1.4s cubic-bezier(.3,.7,.2,1) both .2s;
+}
+@keyframes draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.commit { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding: 56px 0; }
+.commit::before { /* le commit sur la ligne */
+  content: ""; position: absolute; top: 66px; left: calc(var(--rail) - (var(--rail) + 40px) - 8px);
+  width: 19px; height: 19px; border-radius: 50%;
+  background: var(--night); border: 4px solid var(--gold);
+  box-shadow: 0 0 0 6px var(--night), 0 0 18px var(--gold-glow);
+}
+.commit:not(:has(.shot, .install, .steps)) { grid-template-columns: minmax(0, 7fr); }
+h2 { font: 800 clamp(1.7rem, 3vw, 2.3rem)/1.12 var(--display); letter-spacing: -0.015em; margin: 0 0 16px; text-wrap: balance; }
+h3 { font: 600 1.25rem/1.25 var(--display); margin: 0 0 8px; }
+.text p { margin: 0 0 14px; max-width: 34rem; }
+.text p + p { color: var(--muted); }
+
+.shot { margin: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px var(--shadow); }
+.zoom { display: block; cursor: zoom-in; }
+.zoom:focus-visible { outline-offset: -3px; }
+
+/* Capture agrandie : <dialog> natif (Échap, focus et fond inerte gérés par le navigateur) */
+.lightbox { width: min(96vw, 1280px); max-height: 94vh; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--night); overflow: hidden; }
+.lightbox::backdrop { background: var(--night-veil); }
+.lightbox img { width: 100%; height: auto; max-height: 94vh; object-fit: contain; cursor: zoom-out; }
+.lightbox-close {
+  position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--gold-soft); background: var(--night-veil); color: var(--ink);
+  font: 400 1.75rem/1 var(--body); cursor: pointer;
+}
+.lightbox-close:hover { border-color: var(--gold); }
+
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+
+/* ---------- Installation ---------- */
+#installer, #connexion { grid-template-columns: minmax(0, 1fr); }
+.install { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.option { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 26px; display: flex; flex-direction: column; align-items: flex-start; }
+.option > p { margin: 0 0 18px; color: var(--muted); }
+.option .btn { margin-bottom: 18px; }
+.option .hint { margin: 0 0 8px; font-size: 0.95rem; }
+.option .hint:last-child { margin: 14px 0 0; color: var(--muted); }
+.cmd { display: flex; align-items: stretch; width: 100%; background: var(--night); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.cmd code { flex: 1; min-width: 0; padding: 12px 14px; overflow-wrap: break-word; color: var(--code-ink); line-height: 1.5; }
+.copy { border: 0; border-left: 1px solid var(--line); background: var(--surface-2); color: var(--ink); font: 700 0.9rem var(--body); padding: 0 14px; cursor: pointer; }
+.copy:hover { color: var(--gold); }
+.note { grid-column: 1 / -1; margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; max-width: 46rem; }
+
+/* ---------- Connexion : une vraie suite d'étapes ---------- */
+.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 24px; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 14px; border-radius: 50%; background: var(--gold); color: var(--night); font: 800 1.05rem var(--display); }
+
+.facts { margin: 0; padding-left: 1.1em; max-width: 46rem; }
+.facts li { margin-bottom: 10px; }
+.facts li::marker { color: var(--gold); }
+
+/* ---------- Fusion finale ---------- */
+.merge { position: relative; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) 64px calc(var(--rail) + 40px); }
+.merge-line { position: absolute; left: calc(var(--rail) - 19px); top: 0; width: 120px; height: 80px; overflow: visible; }
+.merge-line path { fill: none; stroke: var(--gold); stroke-width: 3; stroke-linecap: round; }
+.merge-line circle { fill: var(--gold); }
+.credits { padding-top: 46px; padding-left: 70px; }
+.credits p { margin: 0 0 8px; }
+.small { font-size: 0.9rem; color: var(--muted); max-width: 46rem; }
+
+/* ---------- Petits écrans ---------- */
+@media (max-width: 860px) {
+  .commit, .install, .steps, .pair { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  :root { --rail: 22px; }
+  .hero { min-height: 100svh; align-items: flex-start; }
+  .backdrop img { animation: none; height: 100%; }
+  .hero-img img { object-position: center bottom; }
+  .hero::before { /* en portrait, les lumières montent jusqu'au texte : voile sombre derrière lui */
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 88%; z-index: 1;
+    background: linear-gradient(to bottom, var(--night) 0%, var(--night-veil) 70%, transparent 100%);
+  }
+  .hero-inner { padding-top: 56px; }
+  .branch, .merge { padding-left: calc(var(--rail) + 28px); }
+  .commit::before { left: calc(var(--rail) - (var(--rail) + 28px) - 8px); top: 62px; }
+  .commit { padding: 44px 0; }
+  .credits { padding-left: 48px; }
+  .merge-line { width: 80px; height: 54px; left: calc(var(--rail) - 12px); }
+  .credits { padding-top: 34px; }
+  .cmd { flex-direction: column; }
+  .cmd code { font-size: 0.85rem; }
+  .copy { border-left: 0; border-top: 1px solid var(--line); padding: 10px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .branch::before { animation: none; }
+  .backdrop img { animation: none; }
+  .btn, .copy { transition: none; }
+}
