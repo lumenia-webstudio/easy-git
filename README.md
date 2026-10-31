@@ -10,6 +10,7 @@
 </p>
 
 <p align="center">
+  <a href="https://easy-git.lumeniawebstudio.com"><strong>easy-git.lumeniawebstudio.com</strong></a><br>
   <a href="LICENSE">MIT</a> · Linux (.deb, AppImage) · Français
 </p>
 
