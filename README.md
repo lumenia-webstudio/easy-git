@@ -19,10 +19,12 @@
 
 <table>
   <tr>
+    <td><img src="docs/screenshots/terminal.webp" alt="Terminal Git avec actions rapides"></td>
     <td><img src="docs/screenshots/reference-git-sombre.webp" alt="Référence Git, thème sombre"></td>
     <td><img src="docs/screenshots/manuel-clair.webp" alt="Manuel pour débutants, thème clair"></td>
   </tr>
   <tr>
+    <td align="center"><sub>Un vrai terminal, avec actions rapides</sub></td>
     <td align="center"><sub>81 commandes Git expliquées</sub></td>
     <td align="center"><sub>Un manuel pour débuter</sub></td>
   </tr>
