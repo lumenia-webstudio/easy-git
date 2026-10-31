@@ -1,0 +1,7 @@
+# Dépendances autorisées à exécuter leurs scripts d'installation
+# (binaire Electron, esbuild natif, compilation de node-pty)
+allowBuilds:
+  electron: true
+  electron-winstaller: false
+  esbuild: true
+  node-pty: true

@@ -1,0 +1,53 @@
+# Publie une version : pousser un tag vX.Y.Z construit le .deb et l'AppImage,
+# calcule leurs SHA-256 et crée la Release GitHub avec les trois fichiers.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    # 22.04 plutôt que la dernière : glibc plus ancienne, binaires compatibles avec plus de distributions
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run lint
+      - run: pnpm run typecheck
+
+      - run: pnpm run electron:build --publish never
+
+      - name: Checksums
+        working-directory: dist-electron-build
+        run: sha256sum *.deb *.AppImage > SHA256SUMS.txt && cat SHA256SUMS.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: easy-git-linux
+          path: |
+            dist-electron-build/*.deb
+            dist-electron-build/*.AppImage
+            dist-electron-build/SHA256SUMS.txt
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist-electron-build/*.deb
+            dist-electron-build/*.AppImage
+            dist-electron-build/SHA256SUMS.txt

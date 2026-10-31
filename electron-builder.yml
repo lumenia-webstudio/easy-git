@@ -1,0 +1,56 @@
+appId: com.lws.easy-git
+productName: Easy Git
+copyright: Copyright © 2026 Sébastien Gaudy (Lumenia Web Studio)
+
+directories:
+  output: dist-electron-build
+  buildResources: assets
+
+# Fichiers inclus dans le package
+files:
+  - dist/**/*
+  - dist-server/**/*
+  - dist-electron/**/*
+  - assets/**/*
+  - package.json
+  - node_modules/**/*
+
+asarUnpack:
+  - dist/**/*
+  - dist-server/**/*
+  - node_modules/node-pty/**/*
+
+npmRebuild: true
+
+linux:
+  target:
+    - target: AppImage
+      arch: x64
+    - target: deb
+      arch: x64
+  icon: assets/icon.png
+  maintainer: Sébastien Gaudy (Lumenia Web Studio) <contact@lumeniawebstudio.com>
+  # Le lanceur du menu démarre directement sans sandbox SUID (même raison que l'AppImage)
+  executableArgs:
+    - --no-sandbox
+  category: Development
+  synopsis: Client GitHub avec terminal intégré
+  description: Easy Git — client GitHub visuel avec terminal réel pour débutants
+
+appImage:
+  # Sans espace : GitHub remplacerait l'espace par un point dans la Release
+  artifactName: Easy-Git-${version}.${ext}
+
+deb:
+  # Liste par défaut d'electron-builder (remplacée dès qu'on la définit) + git pour le terminal intégré
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+    - git

@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    --slate-50: 248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-900: 15 23 42;
+    --slate-950: 2 6 23;
+
+    --app-bg-base: #060d1a;
+    --app-bg-glow: rgba(240, 180, 41, 0.09);
+    --app-bg-glow-2: rgba(56, 120, 220, 0.10);
+    --app-bg-grid: rgba(148, 163, 184, 0.045);
+
+    --bg-page: rgba(4, 10, 20, 0.88);
+    --bg-overlay: rgba(4, 10, 20, 0.88);
+    --bg-sidebar: rgba(4, 10, 20, 0.85);
+    --bg-header: rgba(4, 10, 20, 0.75);
+    --bg-card: rgba(8, 13, 26, 0.65);
+    --bg-card-hover: rgba(240, 180, 41, 0.03);
+    --bg-input: rgba(255, 255, 255, 0.05);
+
+    --border-color: rgba(240, 180, 41, 0.1);
+    --border-sidebar: rgba(240, 180, 41, 0.12);
+    --border-section: rgba(240, 180, 41, 0.08);
+    --border-input: rgba(240, 180, 41, 0.15);
+    --border-input-focus: rgba(240, 180, 41, 0.4);
+
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #475569;
+    --text-faint: rgba(248, 250, 252, 0.55);
+
+    --gold: #f0b429;
+    --gold-dim: rgba(240, 180, 41, 0.6);
+    --gold-faint: rgba(240, 180, 41, 0.35);
+    --gold-bg: rgba(240, 180, 41, 0.08);
+    --gold-bg-hover: rgba(240, 180, 41, 0.12);
+    --gold-border: rgba(240, 180, 41, 0.2);
+    --gold-active-bg: rgba(240, 180, 41, 0.12);
+    --gold-nav-border: rgba(240, 180, 41, 0.6);
+
+    --nav-item-color: rgba(248, 250, 252, 0.55);
+    --nav-item-hover-bg: rgba(255, 255, 255, 0.05);
+    --nav-item-hover-color: #f1f5f9;
+
+    --stat-bar-opacity: 0.25;
+  }
+
+  .light {
+    color-scheme: light;
+
+    /* Palette slate inversée : les classes pensées pour le thème sombre restent lisibles */
+    --slate-50: 2 6 23;
+    --slate-100: 15 23 42;
+    --slate-200: 30 41 59;
+    --slate-300: 51 65 85;
+    --slate-400: 71 85 105;
+    --slate-500: 90 105 128;
+    --slate-600: 120 134 155;
+    --slate-700: 203 213 225;
+    --slate-800: 226 232 240;
+    --slate-900: 241 245 249;
+    --slate-950: 248 250 252;
+
+    --app-bg-base: #eef5fc;
+    --app-bg-glow: rgba(240, 180, 41, 0.12);
+    --app-bg-glow-2: rgba(0, 140, 220, 0.10);
+    --app-bg-grid: rgba(5, 27, 44, 0.05);
+
+    --bg-page: rgba(240, 248, 255, 0.92);
+    --bg-overlay: rgba(240, 248, 255, 0.9);
+    --bg-sidebar: rgba(230, 243, 255, 0.93);
+    --bg-header: rgba(245, 251, 255, 0.85);
+    --bg-card: rgba(255, 255, 255, 0.72);
+    --bg-card-hover: rgba(0, 170, 255, 0.04);
+    --bg-input: rgba(0, 120, 200, 0.05);
+
+    --border-color: rgba(0, 140, 220, 0.18);
+    --border-sidebar: rgba(0, 140, 220, 0.15);
+    --border-section: rgba(0, 140, 220, 0.1);
+    --border-input: rgba(0, 140, 220, 0.25);
+    --border-input-focus: rgba(0, 180, 255, 0.55);
+
+    --text-primary: #051b2c;
+    --text-secondary: #1a3d5c;
+    --text-muted: #4a7090;
+    --text-faint: rgba(5, 27, 44, 0.5);
+
+    --gold: #0099e6;
+    --gold-dim: rgba(0, 140, 220, 0.8);
+    --gold-faint: rgba(0, 140, 220, 0.5);
+    --gold-bg: rgba(0, 153, 230, 0.08);
+    --gold-bg-hover: rgba(0, 153, 230, 0.14);
+    --gold-border: rgba(0, 153, 230, 0.25);
+    --gold-active-bg: rgba(0, 153, 230, 0.1);
+    --gold-nav-border: rgba(0, 180, 255, 0.7);
+
+    --nav-item-color: rgba(5, 27, 44, 0.55);
+    --nav-item-hover-bg: rgba(0, 120, 200, 0.06);
+    --nav-item-hover-color: #051b2c;
+
+    --stat-bar-opacity: 0.3;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(240, 180, 41, 0.2) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(240, 180, 41, 0.2);
+    border-radius: 99px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(240, 180, 41, 0.4);
+  }
+
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    background-color: #040a14;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .animate-in {
+    animation-fill-mode: both;
+  }
+  .fade-in {
+    animation-name: fade-in;
+  }
+  .zoom-in-95 {
+    animation-name: zoom-in-95;
+  }
+  .slide-in-from-bottom-2 {
+    animation-name: slide-in-from-bottom-2;
+  }
+  .duration-150 {
+    animation-duration: 150ms;
+  }
+  .duration-200 {
+    animation-duration: 200ms;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoom-in-95 {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-in-from-bottom-2 {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Fond de l'application : sobre, sans image (halo + quadrillage discret) */
+.app-bg {
+  background-color: var(--app-bg-base);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 85% 0%, var(--app-bg-glow), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 0% 100%, var(--app-bg-glow-2), transparent 70%),
+    linear-gradient(var(--app-bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--app-bg-grid) 1px, transparent 1px);
+  background-size: auto, auto, 40px 40px, 40px 40px;
+}
+
+/* Zones toujours sombres (écran de connexion) : palette slate d'origine, même en thème clair */
+.light .theme-dark-scope {
+    --slate-50: 248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-900: 15 23 42;
+    --slate-950: 2 6 23;
+}
